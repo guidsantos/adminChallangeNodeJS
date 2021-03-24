@@ -7,15 +7,15 @@ class TurnUserAdminController {
 
   handle(request: Request, response: Response): Response {
     try {
-      const { id } = request.params
+      const { user_id } = request.params
 
-      const parsedId = JSON.parse(id)
-
-      const user = this.turnUserAdminUseCase.execute(parsedId)
+      const user = this.turnUserAdminUseCase.execute({
+        user_id: String(user_id),
+      })
 
       return response.json(user)
     } catch (err) {
-      return response.status(404).json({ "error": "Invalid User" })
+      return response.status(404).json({ "error": err.message })
     }
   }
 }
